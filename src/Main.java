@@ -1,7 +1,9 @@
 import contactBook.Contact;
 import contactBook.ContactBook;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 
 public class Main {
@@ -14,6 +16,7 @@ public class Main {
     public static final String SET_EMAIL      = "SE";
     public static final String LIST_CONTACTS  = "LC";
     public static final String GET_CONTACT = "GN";
+    public static final String CHECK_UNIQUE = "EP";
     public static final String QUIT           = "Q";
 
     //Constantes que definem as mensagens para o utilizador
@@ -24,6 +27,8 @@ public class Main {
     public static final String CONTACT_UPDATED = "contactBook.Contact updated.";
     public static final String BOOK_EMPTY = "contactBook.Contact book empty.";
     public static final String PHONE_NOT_EXIST = "Phone number does not exist.";
+    public static final String CONTACT_OVERLAP = "There are contacts that share phone numbers.";
+    public static final String CONTACT_UNIQUE = "All contacts have different phone numbers.";
     public static final String QUIT_MSG = "Goodbye!";
     public static final String COMMAND_ERROR = "Unknown command.";
 
@@ -57,6 +62,9 @@ public class Main {
                     break;
                 case GET_CONTACT:
                     getContactByPhone(in,cBook);
+                    break;
+                case CHECK_UNIQUE:
+                    checkUniqueContact(in,cBook);
                     break;
                 default:
                     System.out.println(COMMAND_ERROR);
@@ -172,5 +180,26 @@ public class Main {
         } else {
             System.out.println(PHONE_NOT_EXIST);
         }
+    }
+
+    private static void checkUniqueContact(Scanner in, ContactBook cBook) {
+        Set <Integer> seenNumbers = new HashSet<>();
+        boolean duplicate = false;
+        if (cBook.getNumberOfContacts() != 0) {
+            cBook.initializeIterator();
+            while (cBook.hasNext()) {
+                Contact c = cBook.next();
+                int phone = c.getPhone();
+                if (!seenNumbers.add(phone)) {
+                    duplicate = true;
+                    break;
+                }
+            }
+            if (duplicate) {
+                System.out.println(CONTACT_OVERLAP);
+            }
+            else System.out.println(CONTACT_UNIQUE);
+        }
+        else System.out.println(CONTACT_UNIQUE);
     }
 }
