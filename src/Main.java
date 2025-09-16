@@ -23,7 +23,7 @@ public class Main {
     public static final String CONTACT_REMOVED = "contactBook.Contact removed.";
     public static final String CONTACT_UPDATED = "contactBook.Contact updated.";
     public static final String BOOK_EMPTY = "contactBook.Contact book empty.";
-    public static final String PHONE_NOT_EXIST = "contactBook.Phone does not exist.";
+    public static final String PHONE_NOT_EXIST = "Phone number does not exist.";
     public static final String QUIT_MSG = "Goodbye!";
     public static final String COMMAND_ERROR = "Unknown command.";
 
@@ -161,7 +161,7 @@ public class Main {
             while (cBook.hasNext()) {
                 Contact c = cBook.next();
                 if (c.getPhone() == phone) {
-                    System.out.println(c.getName() + "; " + c.getEmail() + "; " + c.getPhone());
+                    System.out.println(c.getName());
                     found = true;
                     break;
                 }
